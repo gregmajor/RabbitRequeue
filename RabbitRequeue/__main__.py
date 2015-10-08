@@ -20,7 +20,7 @@ nservicebus_error_headers = ['NServiceBus.FailedQ']
 def main(args=None):
     """ The program entry point. """
 
-    parser = argparse.ArgumentParser(description='Gets messages from RabbitMQ and stores them in RavenDB.')
+    parser = argparse.ArgumentParser(description='Requeues RabbitMQ messages.')
 
     parser.add_argument('rabbit_source_queue', help='the name of the RabbitMQ source queue to get the messages from')
     parser.add_argument('message_count', help='the number of messages to requeue')
