@@ -21,10 +21,10 @@ def main(args=None):
     """ The program entry point. """
 
     parser = argparse.ArgumentParser(description='Requeues RabbitMQ messages.')
-
-    parser.add_argument('rabbit_source_queue', help='the name of the RabbitMQ source queue to get the messages from')
-    parser.add_argument('message_count', help='the number of messages to requeue')
-
+   
+    parser.add_argument('-f', '--message_file', help='the JSON message file')
+    parser.add_argument('-m', '--message_count', help='the number of messages to requeue')
+    parser.add_argument('-q', '--rabbit_source_queue', help='the name of the RabbitMQ source queue to get the messages from')
     parser.add_argument('-d', '--rabbit_destination_queue', help='the name of the RabbitMQ destination queue')
     parser.add_argument('-r', '--rabbit_host_url', default='http://localhost', help='the RabbitMQ host URL')
     parser.add_argument('-p', '--rabbit_port', type=int, default=15672, help='the RabbitMQ port')
@@ -34,8 +34,14 @@ def main(args=None):
 
     args = parser.parse_args()
 
-    # Get the RabbitMQ messages...
-    messages = get_rabbit_messages(args.message_count, args.rabbit_host_url, args.rabbit_port, args.rabbit_vhost, args.rabbit_source_queue, args.rabbit_authorization_string, args.verbose)
+    if args.message_file:
+        # Get the RabbitMQ messages from the file...
+        messages = get_rabbit_messages_from_file(args.message_file, args.verbose)
+    elif args.rabbit_source_queue:
+        # Get the RabbitMQ messages from the source queue...
+        messages = get_rabbit_messages_from_queue(args.message_count, args.rabbit_host_url, args.rabbit_port, args.rabbit_vhost, args.rabbit_source_queue, args.rabbit_authorization_string, args.verbose)
+    else:
+        raise ValueError('You must supply either the message file -OR- the rabbit source queue!')
 
     # Requeue the messages...
     requeue_messages(messages, args.rabbit_host_url, args.rabbit_port, args.rabbit_vhost, args.rabbit_authorization_string, args.rabbit_destination_queue, args.verbose)
@@ -85,7 +91,29 @@ def build_rabbit_publish_url(rabbit_host_url, rabbit_port, rabbit_vhost, rabbit_
     return url
 
 
-def get_rabbit_messages(message_count, rabbit_host_url, rabbit_port, rabbit_vhost, rabbit_source_queue, rabbit_authorization_string, verbose=False):
+def get_rabbit_messages_from_file(file, verbose=False):
+    """ Gets messages from a JSON file.
+
+    Args:
+      file (str): The JSON file.
+
+    Returns:
+      list: The message contained in the file.
+    """
+
+    print("Getting messages from {0}...".format(file))
+
+    with open(file) as json_data:
+        
+        d = json.load(json_data)
+        
+        if verbose:
+            print(d)
+        
+        return [d]
+    
+    
+def get_rabbit_messages_from_queue(message_count, rabbit_host_url, rabbit_port, rabbit_vhost, rabbit_source_queue, rabbit_authorization_string, verbose=False):
     """ Gets messages from RabbitMQ.
 
     Args:
@@ -120,7 +148,7 @@ def requeue_messages(messages, rabbit_host_url, rabbit_port, rabbit_vhost, rabbi
     """ Requeues messages in RabbitMQ.
 
     Args:
-      messages (list): The messages to store in RavenDB.
+      messages (list): The messages to requeue.
       rabbit_host_url (str): The RabbitMQ host URL.
       rabbit_port (int): The RabbitMQ host port.
       rabbit_vhost (str): The name of the RabbitMQ vhost.

@@ -1,0 +1,32 @@
+{
+  "properties": {
+    "headers": {
+      "NServiceBus.FailedQ": "Autobahn.Ordering.Host@ZIRCON",
+      "nServiceBus.MessageId": "2a492c01-c267-4045-a9a4-a52b0115c76b",
+      "nServiceBus.CorrelationId": "2a492c01-c267-4045-a9a4-a52b0115c76b",
+      "nServiceBus.MessageIntent": "Publish",
+      "nServiceBus.Version": "5.0.3",
+      "nServiceBus.TimeSent": "2015-10-08 16:51:21:738745 Z",
+      "nServiceBus.ContentType": "application/json",
+      "nServiceBus.EnclosedMessageTypes": "Autobahn.Ordering.Contracts.Events.V2.IOrderFailed, Autobahn.Ordering.Contracts.Events, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "winIdName": "NOBRAINER2\\octopus",
+      "nServiceBus.RelatedTo": "6819b240-53a8-416f-927a-a52b00bc2fd0",
+      "nServiceBus.ConversationId": "fd9db95a-d47d-4922-8e70-a52b00bc2fd0",
+      "nServiceBus.RabbitMQ.CallbackQueue": "Gcc.Pops.NtService.CVPPOPS01",
+      "nServiceBus.OriginatingMachine": "2-P1-APP01",
+      "nServiceBus.OriginatingEndpoint": "Autobahn.Ordering.Host",
+      "$.diagnostics.originating.hostid": "4fc076d2cbd8879149139447ebb18631",
+      "nServiceBus.ReplyToAddress": "Autobahn.Ordering.Host",
+      "$.diagnostics.hostid": "e85d431e33ef196f5c4d25b83fc820ff",
+      "$.diagnostics.hostdisplayname": "CVPPOPS01",
+      "$.diagnostics.license.expired": "false",
+      "nServiceBus.ProcessingStarted": "2015-10-08 16:51:21:500719 Z",
+      "nServiceBus.ProcessingEnded": "2015-10-08 16:51:21:516329 Z",
+      "nServiceBus.ProcessingMachine": "CVPPOPS01",
+      "nServiceBus.ProcessingEndpoint": "Gcc.Pops.NtService",
+      "nServiceBus.OriginatingAddress": "Autobahn.Ordering.Host@CVPPOPS01",
+      "SiteId": 11,
+      "CorrelationId": "c9ea8a97-2f1c-4852-a107-23910abf093a"
+    }
+  }
+}
